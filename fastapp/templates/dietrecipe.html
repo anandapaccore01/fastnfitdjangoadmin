@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div id="content" class="colM">
+        
+    <h1>Add Dietplan Recipe</h1>
+    <div id="content-main">
+
+
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p }}
+            
+        
+            <div class="submit-row">
+                <input type="submit" value="Save" class="default" name="_save">            
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

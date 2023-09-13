@@ -1,0 +1,170 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block content %}
+<div id="content" class="colM">
+        
+    <h1>Add Questionnaire</h1>
+    <div id="content-main">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="col-12 ">
+                    <div class="form-row field-name"> 
+                        <div>                
+                                <label class="required" for="id_name"> Question:</label>                   
+                                <input type="text" name="question" class="vTextField" maxlength="255" required id="question">        
+                        </div>        
+                    </div>
+                    <div>
+                        <label for="quetype">Question Type:</label>
+                                <select name="quetype" id="quetype">
+                                    <option value="">select</option>
+                                    <option value="MCQ">Mutiple Choices</option>
+                                    <option value="sliding">Sliding</option>
+                                    <option value="custom">Custom</option>
+                                </select><br><br>
+                    </div>
+                    <div id="mcqFields" style="display: none;">
+                        <div id="optionsContainer">
+                            <label for="mcqOption">Options:</label>
+                            <input type="text" name="options"><br>          
+
+                        </div>
+                        <button type="button" id="addOption">Add Option</button>
+                    </div>
+                    <div id="slidingFields"  style="display: none;">
+                        <div id="rangeContainer"></div>
+                        <label for="range">Range:</label><br>
+                        <div>
+                            <label for="rangefrom">From:</label>
+                            <input type="number" name="rangefrom"><br>
+                            <label for="rangeto">To:</label>
+                            <input type="number" name="rangeto"><br>
+                            <label for="rangescale">scale:</label>
+                            <select name="scale">
+                                <option value="">select</option>
+                                <option value="cm">cm</option>
+                                <option value="in">in</option>
+                                <option value="kg">kg</option>
+                                <option value="lbs">lbs</option>
+                            </select><br><br>
+                        </div>
+                        <button type="button" id="addRangeButton">Add Range</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="inputtype">question input type:</label>
+                        <select name="inputtype"> int, float, string, weight scale, hieght scale if qusetion type sliding or custom
+                            <option value="">select</option>
+                            <option value="int">Integer</option>cm/in/kg/lbs
+                            <option value="float">float</option>
+                            <option value="string">string</option>
+                            <option value="weight_scale">weight scale</option>
+                            <option value="height_scale">height scale</option>
+                        </select><br><br>
+                    </div>
+                    <div>
+                        <label for="status">Status:</label>
+                        <input type="number" name="status" value="1"><br>
+                    </div>
+                    <div>
+                        <div class="form-outline mb-4">                    
+                            <label class="form-label">Created By:</label>
+                            <input type="text" name="created_by" placeholder="Created By"  />
+                        </div>
+                    </div><br><br>
+                    <div>
+                        <div class="form-outline mb-4">                    
+                            <label class="form-label">Updated By:</label>
+                            <input type="text" name="updated_by" placeholder="Updated By" />
+                        </div>
+                    </div><br><br>
+                    <div class="submit-row">
+                        <input type="submit" value="Save" class="default" name="_save">            
+                    </div>
+                
+            </form>
+        </div>
+    </div>
+<script>
+    // Get references to the select element and the divs for additional fields
+    var quetypeSelect = document.getElementById("quetype");
+    var mcqFields = document.getElementById("mcqFields");
+    var slidingFields = document.getElementById("slidingFields");
+    var customFields = document.getElementById("customFields");
+    
+    // Add an event listener to the select element
+    quetypeSelect.addEventListener("change", function() {
+        // Hide all additional field divs
+        mcqFields.style.display = "none";
+        slidingFields.style.display = "none";
+        
+    
+        // Show the selected additional field div based on the selected option
+        var selectedOption = quetypeSelect.value;
+        if (selectedOption === "MCQ") {
+            mcqFields.style.display = "block";
+        } else if (selectedOption === "sliding") {
+            slidingFields.style.display = "block";
+        } else if (selectedOption === "custom") {
+            customFields.style.display = "block";
+        }
+    });
+    </script>
+    <script>
+        // Get references to DOM elements
+        var rangeContainer = document.getElementById("rangeContainer");
+        var addRangeButton = document.getElementById("addRangeButton");
+        
+        // Function to add a new set of range inputs
+        function addRangeQuestion() {
+            var newRangeQuestion = document.createElement("div");
+            newRangeQuestion.classList.add("range-question");
+        
+            newRangeQuestion.innerHTML = `
+                <label for="range">Range:</label><br>
+                <label for="rangefrom">From:</label>
+                <input type="number" name="rangefrom"><br>
+        
+                <label for="rangeto">To:</label>
+                <input type="number" name="rangeto"><br>
+        
+                <label for="rangescale">Scale:</label>
+                <select name="scale">
+                    <option value="">select</option>
+                    <option value="cm">cm</option>
+                    <option value="in">in</option>
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                </select><br><br>
+            `;
+        
+            rangeContainer.appendChild(newRangeQuestion);
+        }
+        
+        // Add a click event listener to the "Add Range" button
+        addRangeButton.addEventListener("click", addRangeQuestion);
+        </script>
+        <script>
+            // Get references to DOM elements
+            var optionsContainer = document.getElementById("optionsContainer");
+            var addOptionButton = document.getElementById("addOption");
+            var optionCount = 1;
+
+            // Function to add a new option input field
+            function addOptionInput() {
+                var newOptionInput = document.createElement("div");
+                newOptionInput.classList.add("add-options");
+                newOptionInput.innerHTML=`
+                <label for="mcqOption">Options:</label>
+                <input type="text" name="options"><br>`;
+                
+                optionsContainer.appendChild(newOptionInput);
+                optionCount++;
+            }
+
+            // Add a click event listener to the "Add Option" button
+            addOptionButton.addEventListener("click", addOptionInput);
+        </script>
+
+{% endblock %}

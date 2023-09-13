@@ -1,0 +1,195 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block content %}
+<div id="content" class="colM">
+        
+    <h1>Add Questionnaire</h1>
+    <div id="content-main">
+        <form method="POST" >
+            {% csrf_token %}
+            <div class="col-12 ">
+                <div class="form-row field-name"> 
+                    <div>                
+                            <label class="required" for="id_name"> Recipe Name:</label>                   
+                            <input type="text" name="name" class="vTextField" maxlength="255" required id="id_name">        
+                    </div>        
+                </div><br><br>
+                <div class="col-6">
+                    <div class="form-row field-name">
+                        <label class="form-label">Ingredients:</label>
+                        <div id="ingredient_fields">
+                            <label class="form-label">Ingredient Name:</label>
+                        
+                            <input type="text" name="Ingredient[name]" placeholder="Ingredient Name" class="vTextField" maxlength="255" required id="id_name"><br><br>
+                            <label for="ingredient_category">Category:</label>
+                            <select name="ingredient[category]">
+                                <option value="">select</option>
+                                <option value="veg">Veg</option>
+                                <option value="non-veg">Non-Veg</option>
+                            </select><br><br>
+
+                            <label for="ingredient_quantity">Quantity:</label>
+                            <input type="text" name="ingredient[quantity]" placeholder="Ingredient Quantity" ><br><br>
+
+                            <label for="ingredient_quantity_type">Quantity Type:</label>
+                            <input type="text" name="ingredient[quantity_type]" placeholder="Ingredient Quantity Type" ><br><br>
+                        </div>                   
+                        <button type="button" id="add_ingredient">Add Ingredient</button><br><br>
+                    </div>
+                    
+                    
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Serving:</label>
+                        <input type="number" name="serving"  /><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Preparation Time:</label>
+                        <input type="number" name="PrepTime"  /><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Cooking Time:</label>
+                        <input type="number" name="cookTime"  /><br><br>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-outline mb-4">                    
+                        <label for="instruction_text">Instruction:</label>
+                        <textarea name="instructions"  size="100%" ></textarea><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Image Urls:</label>
+                        <input type="text" name="Image"  /><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Meta tags:</label>
+                        <textarea name="tags"  size="100%" ></textarea><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">likes:</label>
+                        <input type="float" name="likes" /><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">nutrition:</label>
+                        <div>                                     
+                            <label class="form-label">carbohydrates:</label>
+                            <input type="number" name="carbs"  />
+                            <select name="carbs_units">                       
+                                <option value="grms">grms</option>
+                                <option value="Kgrms">grms</option>
+                            </select><br><br>
+                                
+                        </div><br><br>
+                        <div>                                     
+                            <label class="form-label">calories:</label>
+                            <input type="number" name="calories"  /> 
+                        </div><br><br>
+                        <div>                                     
+                            <label class="form-label">Proteins:</label>
+                            <input type="number" name="protein"  />
+                            <select name="protein_units">                       
+                                <option value="grms">grms</option>
+                                <option value="Kgrms">grms</option>
+                            </select><br>
+                                
+                        </div><br><br>
+                        <div>                                     
+                            <label class="form-label">Fats:</label>
+                            <input type="number" name="fats"  />
+                            <select name="fats_units">                       
+                                <option value="grms">grms</option>
+                                <option value="Kgrms">grms</option>
+                            </select><br>
+                                
+                        </div><br><br>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">dietaryPreferences:</label>
+                        <input type="text" name="dietaryPreferences" placeholder="dietaryPreferences" size="100%" />
+                    </div>
+                </div><br><br>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">cuisineType:</label>
+                        <input type="text" name="cuisineType" placeholder="cuisineType" size="100%" />
+                    </div>
+                </div><br><br>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Created By:</label>
+                        <input type="text" name="created_by" placeholder="Created By"  />
+                    </div>
+                </div><br><br>
+                <div class="col-6">
+                    <div class="form-outline mb-4">                    
+                        <label class="form-label">Updated By:</label>
+                        <input type="text" name="updated_by" placeholder="Updated By" />
+                    </div>
+                </div><br><br>
+                <div class="submit-row">
+                    <input type="submit" value="Save" class="default" name="_save">            
+                </div>
+        </form>
+        </div>
+        </div>
+
+<script>
+    // JavaScript for adding and removing ingredient fields
+    document.addEventListener("DOMContentLoaded", function () {
+        const addIngredientButton = document.getElementById("add_ingredient");
+        const ingredientFields = document.getElementById("ingredient_fields");
+
+        // Function to add a new ingredient field
+        function addIngredientField() {
+            const ingredientField = document.createElement("div");
+            ingredientField.classList.add("ingredient"); // Add a CSS class for styling
+            ingredientField.innerHTML = `
+                <label for="ingredient_name">Ingredient Name:</label>
+                <input type="text" name="Ingredient[name]" required><br><br>
+
+                <label for="ingredient_category">Category:</label>
+                <select name="ingredient[category]">
+                    <option value="veg">Veg</option>
+                    <option value="non-veg">Non-Veg</option>
+                </select><br><br>
+
+                <label for="ingredient_quantity">Quantity:</label>
+                <input type="text" name="ingredient[quantity]"><br><br>
+
+                <label for="ingredient_quantity_type">Quantity Type:</label>
+                <input type="text" name="ingredient[quantity_type]"><br><br>
+
+                <!-- Add a "Remove" button for each ingredient -->
+                <button type="button" class="remove_ingredient">Remove</button><br><br>
+            `;
+
+            // Add a click event listener to the "Remove" button
+            const removeButton = ingredientField.querySelector(".remove_ingredient");
+            removeButton.addEventListener("click", function () {
+                ingredientFields.removeChild(ingredientField);
+            });
+
+            ingredientFields.appendChild(ingredientField);
+        }
+
+        // Add click event listener to the "Add Ingredient" button
+        addIngredientButton.addEventListener("click", addIngredientField);
+    });
+</script>
+{% endblock %}
